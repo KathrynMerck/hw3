@@ -1,0 +1,21 @@
+html, body {
+height: 100%;
+}
+
+.paramdiv {
+display: flex;
+justify-content: center;
+height: 100%;
+width: 50%;
+}
+
+.arrow {
+    transform: rotate(180deg);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 0 2px 2px 0;
+    background-color: whitesmoke;
+    transition: transform 1s ease-in-out;
+}
