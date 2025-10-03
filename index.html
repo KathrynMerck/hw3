@@ -10,9 +10,40 @@
   </head>
   <body>
     <div class="paramdiv">
-        <div class="parammain"></div>
+        <div class="parammain overlay">
+            <div class="parammainfloat">
+                <div class="tablediv">
+                    <table id="inputtable">
+                        <tr>
+                            <td class="cell">&times;</td>
+                            <td class="cell"><input type="number" id="rowmin" title="Min 1" min="-50" max="50" value="1"></td>
+                            <td class="cell">&hellip;</td>
+                            <td class="cell"><input type="number" id="rowmax" title="Max 1" min="-50" max="50" value="2"></td>
+                        </tr>
+                        <tr>
+                            <td class="cell"><input type="number" id="colmin" title="Min 2" min="-50" max="50" value="3"></td>
+                            <td class="cell">#</td>
+                            <td class="cell" id="tcell">#</td>
+                            <td class="cell">#</td>
+                        </tr>
+                        <tr>
+                            <td class="cell">&hellip;</td>
+                            <td class="cell" id="lcell">#</td>
+                            <td class="cell" id="mcell">#</td>
+                            <td class="cell" id="rcell">#</td>
+                        </tr>
+                        <tr>
+                            <td class="cell"><input type="number" id="colmax" title="Max 2" min="-50" max="50" value="4"></td>
+                            <td class="cell">#</td>
+                            <td class="cell" id="bcell">#</td>
+                            <td class="cell">#</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div class="paramtoggle">
-            <div class="arrow"><i class="bi bi-caret-left-fill"></i></div>
+            <div class="arrow overlay"><i class="bi bi-caret-left-fill toggon"></i></div>
         </div>
     </div>
     <div class="tablediv">
