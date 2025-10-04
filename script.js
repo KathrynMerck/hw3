@@ -18,26 +18,21 @@ class HSL {
         this.h = h;
         this.s = s;
         this.l = l;
-        if(l > 50)
+        if(l > 80)
             this.t = "black;"
         else
             this.t = "white;"
     }
    
     get string() {
-        return "hsl(" + Math.floor(this.h) + ", " + Math.floor(this.s) + "%, " + Math.floor(this.l) + "%)";
+        return "hsl(" + Math.floor(this.h) + ", " + Math.floor(this.s) + "%, " + Math.floor(this.l) + "%);";
     }
 
     static add(hsl1, hsl2) {
-        const nh = (hsl1.h + hsl2.h) % 360;
-        const ns = (hsl1.s + hsl2.s) % 100;
-        const nl = (hsl1.l + hsl2.l) % 100;
-        if (nh < 0)
-            nh += 360;
-        if (ns < 0)
-            ns += 100;
-        if (nl < 0)
-            nl += 100;
+        let nh = (hsl1.h + hsl2.h);
+        let ns = (hsl1.s + hsl2.s);
+        let nl = (hsl1.l + hsl2.l);
+        
         return new HSL(nh, ns, nl);
     }
 }
@@ -115,13 +110,13 @@ function createTable(coEffs, values, diffs) {
     let xCell = document.createElement("td");
     xCell.innerHTML = "&times;";
     xCell.setAttribute("class", "rescell timescell");
-    xCell.setAttribute("style", "background-color: " + blendArr[0][0].string + "; color: " + blendArr[0][0].t);
+    xCell.setAttribute("style", "background-color: white; color: " + blendArr[0][0].string);
     rowStart.appendChild(xCell);
     for (let i = 0; i <= diffs[1]; i++) {
         let cellsTop = document.createElement("td");
-        cellsTop.innerHTML = (i + 1) * values[2];
+        cellsTop.innerHTML = (i * coEffs[1]) + values[2];
         cellsTop.setAttribute("class", "rescell startrow");
-        cellsTop.setAttribute("style", "background-color: " + blendArr[0][i+1].string + "; color: " + blendArr[0][i+1].t);
+        cellsTop.setAttribute("style", "background-color: white; color: " + blendArr[0][i+1].string);
         rowStart.appendChild(cellsTop);
     }
     resTable.appendChild(rowStart);
@@ -130,14 +125,14 @@ function createTable(coEffs, values, diffs) {
         row.setAttribute("id", "row" + r);
         let cellStart = document.createElement("td");
         cellStart.setAttribute("class", "startcell rescell");
-        cellStart.setAttribute("style", "background-color: " + blendArr[r+1][0].string + "; color: " + blendArr[r+1][0].t);
-        cellStart.innerHTML = r + values[0];
+        cellStart.setAttribute("style", "background-color: white; color: " + blendArr[r+1][0].string);
+        cellStart.innerHTML = (r * coEffs[0]) + values[0];
         row.appendChild(cellStart);
         for (let c = 0; c <= diffs[1]; c++) {
             let cell = document.createElement("td");
             cell.innerHTML = (values[0] + r * coEffs[0]) * (values[2] + c * coEffs[1]);
             cell.setAttribute("class", "rescell");
-            cell.setAttribute("style", "background-color: " + blendArr[r+1][c+1].string + "; color: " + blendArr[r+1][c+1].t);
+            cell.setAttribute("style", "background-color: " + blendArr[r+1][c+1].string + " color: " + blendArr[r+1][c+1].t);
             row.appendChild(cell);
         }
         resTable.appendChild(row);
@@ -150,7 +145,7 @@ function randcolor() {
     h1 = Math.floor(h1 * 360);
 
     s1 = Math.random();
-    s1 = Math.floor(s1 * 100);
+    s1 = Math.floor(s1 * 50) + 50;
 
     l1 = Math.random();
     l1 = Math.floor(l1 * 60) + 20;
