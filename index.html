@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>HW 3</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
@@ -16,12 +16,12 @@
                     <table id="inputtable">
                         <tr>
                             <td class="cell">&times;</td>
-                            <td class="cell"><input type="number" id="rowmin" title="Min 1" min="-50" max="50" value="1"></td>
+                            <td class="cell"><input type="number" id="colmin" title="Min 1" min="-50" max="50" value="1"></td>
                             <td class="cell">&hellip;</td>
-                            <td class="cell"><input type="number" id="rowmax" title="Max 1" min="-50" max="50" value="2"></td>
+                            <td class="cell"><input type="number" id="colmax" title="Max 1" min="-50" max="50" value="2"></td>
                         </tr>
                         <tr>
-                            <td class="cell"><input type="number" id="colmin" title="Min 2" min="-50" max="50" value="3"></td>
+                            <td class="cell"><input type="number" id="rowmin" title="Min 2" min="-50" max="50" value="3"></td>
                             <td class="cell">#</td>
                             <td class="cell" id="tcell">#</td>
                             <td class="cell">#</td>
@@ -33,22 +33,26 @@
                             <td class="cell" id="rcell">#</td>
                         </tr>
                         <tr>
-                            <td class="cell"><input type="number" id="colmax" title="Max 2" min="-50" max="50" value="4"></td>
+                            <td class="cell"><input type="number" id="rowmax" title="Max 2" min="-50" max="50" value="4"></td>
                             <td class="cell">#</td>
                             <td class="cell" id="bcell">#</td>
                             <td class="cell">#</td>
                         </tr>
                     </table>
+                    <button id="submitbutton">Generate</button>
                 </div>
             </div>
         </div>
         <div class="paramtoggle">
             <div class="arrow overlay"><i class="bi bi-caret-left-fill toggon"></i></div>
         </div>
-    </div>
-    <div class="tablediv">
+         <div class="gentablediv">
+            <table id="resulttable">
 
+            </table>
+        </div>
     </div>
+   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="script.js"></script>
   </body>
