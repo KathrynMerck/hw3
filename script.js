@@ -5,8 +5,14 @@ const max1 = document.getElementById("rowmax");
 const min2 = document.getElementById("colmin");
 const max2 = document.getElementById("colmax");
 const resTable = document.getElementById("resulttable");
+const customCheck = document.getElementById("customColors");
+const hiddenDiv = document.getElementsByClassName("hiddendiv")[0];
+const colorPickers = document.getElementsByClassName("colorpick");
+
+customCheck.addEventListener("change", showColorPicks);
 
 const invalids = new Set();
+const customHSLs = [];
 
 min1.addEventListener("blur", validatein);
 max1.addEventListener("blur", validatein);
@@ -36,6 +42,7 @@ class HSL {
         return new HSL(nh, ns, nl);
     }
 }
+
 
 for (const toggle of toggles) {
     toggle.addEventListener("click", toggleFunct);
@@ -91,11 +98,17 @@ function invalidParams() {
 
 function createTable(coEffs, values, diffs) {
     resTable.innerHTML = "";
-
-    const cMin = randcolor();
-    const crMax = randcolor();
-    const ccMax = randcolor();
-
+    let cMin, crMax, ccMax;
+    if(customCheck.checked == false){
+        cMin = randcolor();
+        crMax = randcolor();
+        ccMax = randcolor();
+    } else {
+        cMin = toHSL(colorPickers[0].value);
+        console.log(cMin.string);
+        crMax = toHSL(colorPickers[2].value);
+        ccMax = toHSL(colorPickers[1].value);
+    }
     const blendFact = colorBlend(cMin, crMax, diffs[0]+1)[1];
     const blendArr = [colorBlend(cMin, ccMax, diffs[1]+1)[0]];
     
@@ -110,13 +123,13 @@ function createTable(coEffs, values, diffs) {
     let xCell = document.createElement("td");
     xCell.innerHTML = "&times;";
     xCell.setAttribute("class", "rescell timescell");
-    xCell.setAttribute("style", "background-color: white; color: " + blendArr[0][0].string);
+    xCell.setAttribute("style", "color: " + blendArr[0][0].string);
     rowStart.appendChild(xCell);
     for (let i = 0; i <= diffs[1]; i++) {
         let cellsTop = document.createElement("td");
         cellsTop.innerHTML = (i * coEffs[1]) + values[2];
         cellsTop.setAttribute("class", "rescell startrow");
-        cellsTop.setAttribute("style", "background-color: white; color: " + blendArr[0][i+1].string);
+        cellsTop.setAttribute("style", "color: " + blendArr[0][i+1].string);
         rowStart.appendChild(cellsTop);
     }
     resTable.appendChild(rowStart);
@@ -125,7 +138,7 @@ function createTable(coEffs, values, diffs) {
         row.setAttribute("id", "row" + r);
         let cellStart = document.createElement("td");
         cellStart.setAttribute("class", "startcell rescell");
-        cellStart.setAttribute("style", "background-color: white; color: " + blendArr[r+1][0].string);
+        cellStart.setAttribute("style", "color: " + blendArr[r+1][0].string);
         cellStart.innerHTML = (r * coEffs[0]) + values[0];
         row.appendChild(cellStart);
         for (let c = 0; c <= diffs[1]; c++) {
@@ -167,3 +180,59 @@ function colorBlend(hsl1, hsl2, n) {
     return [carr, fact];
 }
 
+function showColorPicks() {
+    hiddenDiv.classList.toggle("showhiddendiv");
+}
+
+function toHSL(hex) {
+    const decs = [[hex.charCodeAt(1), hex.charCodeAt(2)], 
+               [hex.charCodeAt(3), hex.charCodeAt(4)], 
+               [hex.charCodeAt(5), hex.charCodeAt(6)]];
+    const hexcodes = [];
+    let text = "";
+        for (const dec of decs) {
+            if(dec[0] > 64)
+                dec[0] = dec[0] - 33;
+            if(dec[1] > 64)
+                dec[1] = dec[1] - 33;
+            let b = "";
+            let c = "";
+            b += Math.floor(dec[0] / 16);
+            c += Math.floor(dec[1] / 16);
+            b += (dec[0] % 16);
+            c += (dec[1] % 16);
+            hexcodes.push([Number(b) - 30, Number(c) - 30]);
+        }
+    const rgbs = [];
+        for (const hexcode of hexcodes) {
+            rgbs.push(hexcode[0] * 16 + hexcode[1]);
+        }
+    let max = Math.max(rgbs[0], rgbs[1], rgbs[2]);
+    let min = Math.min(rgbs[0], rgbs[1], rgbs[2]);
+    let chr = max - min;
+
+    let h;
+    if (chr == 0) {
+        h = 0;
+    } else {
+        if (max == rgbs[0]) {
+            h = ((rgbs[1] - rgbs[2]) / chr) % 6;
+        } else if (max == rgbs[1]) {
+            h = ((rgbs[2] - rgbs[0]) / chr) + 2;
+        } else if (max == rgbs[2]) {
+            h = ((rgbs[0] - rgbs[1]) / chr) + 4;
+        }
+    }
+    h = h*60;
+
+    let l = 100 * ((max + min) / (2 * 255));
+    console.log(rgbs[0] + " " + rgbs[2]);
+    let s;
+    if(chr == 0) {
+        s = 0;
+    } else {
+        s = ((chr / 2.55) / (1 - Math.abs(2 * (l / 100) - 1)));
+    }
+    return new HSL(h, Math.round(s), Math.round(l));
+    
+}

@@ -150,7 +150,7 @@ tr .cell:first-child {
 
 .startcell, .startrow {
     position: sticky;
-    background-color: aquamarine;
+    background-color: white;
     border: none;
     z-index: 1;
 }
@@ -168,8 +168,12 @@ tr .cell:first-child {
     top: 0;
     left: 0;
     z-index: 2;
-    background-color: aliceblue;
+    background-color: white;
     border: none;
+}
+
+.startcell:hover, .startrow:hover {
+    background-color: #d4d4d4;
 }
 
 input[type=color] {
@@ -179,4 +183,13 @@ input[type=color] {
     height: 50px;
     outline: 3px solid white;
     outline-offset: -2px;
+    margin: 3px 6px;
+}
+
+.hiddendiv {
+    display: none;
+}
+
+.showhiddendiv {
+    display: block !important;
 }

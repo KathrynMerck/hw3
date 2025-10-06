@@ -39,14 +39,15 @@
                             <td class="cell">#</td>
                         </tr>
                     </table>
-                    <input type="checkbox" name="" id="customColors">
+                    <input type="checkbox" name="customColors" id="customColors"><label for="customColors">Use Custom Colors</label>
                     <div class="hiddendiv">
-                        <input type="color" name="minc" id="minc"><input type="color" name="max1c" id="max1c">
+                        <input type="color" name="minc" id="minc" class="colorpick" title="Minimum color" value="#990000"><input type="color" name="max1c" id="max1c" class="colorpick" title="Maximum color (horizontal)" value="#009900">
                         <br>
-                        <input type="color" name="max2c" id="max2c">
-                        <br>
+                        <input type="color" name="max2c" id="max2c" class="colorpick" title="Maximum color (vertical)" value="#000099">
                     </div>
+                    <div>
                     <button id="submitbutton">Generate</button>
+                    </div>
                 </div>
             </div>
         </div>
