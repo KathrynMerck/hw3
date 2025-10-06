@@ -93,7 +93,6 @@ function checkparams() {
 }
 
 function invalidParams() {
-    console.log("no\n");
 }
 
 function createTable(coEffs, values, diffs) {
@@ -104,8 +103,6 @@ function createTable(coEffs, values, diffs) {
         crMax = randcolor();
         ccMax = randcolor();
     } else {
-        cMin = toHSL(colorPickers[0].value);
-        console.log(cMin.string);
         crMax = toHSL(colorPickers[2].value);
         ccMax = toHSL(colorPickers[1].value);
     }
@@ -226,7 +223,6 @@ function toHSL(hex) {
     h = h*60;
 
     let l = 100 * ((max + min) / (2 * 255));
-    console.log(rgbs[0] + " " + rgbs[2]);
     let s;
     if(chr == 0) {
         s = 0;
