@@ -193,3 +193,12 @@ input[type=color] {
 .showhiddendiv {
     display: block !important;
 }
+
+.inactivewarn {
+    max-height: 0;
+}
+
+.warn {
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+}

@@ -8,6 +8,7 @@ const resTable = document.getElementById("resulttable");
 const customCheck = document.getElementById("customColors");
 const hiddenDiv = document.getElementsByClassName("hiddendiv")[0];
 const colorPickers = document.getElementsByClassName("colorpick");
+const warndiv = document.getElementById("invalidwarn");
 
 customCheck.addEventListener("change", showColorPicks);
 
@@ -65,7 +66,7 @@ function validatein() {
     else {
         this.classList.remove("invalidinput");
         if(invalids.has(this.id))
-            invalids.remove(this.id);
+            invalids.delete(this.id);
     }
 }
 
@@ -76,7 +77,7 @@ function checkparams() {
     }
     const values = [Number(min1.value), Number(max1.value), Number(min2.value), Number(max2.value)];
     for(const value of values) {
-        if(value < -50 || value > 50 || value == NaN){
+        if(value < -50 || value > 50 || value == NaN || value % 1 != 0){
             invalidParams();
             return;
         }
@@ -93,10 +94,13 @@ function checkparams() {
 }
 
 function invalidParams() {
-    console.log("no\n");
+    if(warndiv.classList.contains("inactivewarn"))
+        warndiv.classList.remove("inactivewarn");
 }
 
 function createTable(coEffs, values, diffs) {
+    if(!warndiv.classList.contains("inactivewarn"))
+        warndiv.classList.add("inactivewarn");
     resTable.innerHTML = "";
     let cMin, crMax, ccMax;
     if(customCheck.checked == false){
