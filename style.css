@@ -34,6 +34,16 @@ html, body {
     margin: 0 min(12vw, calc(375px * .24));
 }
 
+.instructiondiv {
+    float: right;
+    margin: auto min(8vw, calc(375px * .15));
+}
+
+.instructiondiv ul {
+    min-width: max(40%, 300px, calc(90% - 19px));
+    overflow: hidden;
+}
+
 .paramtoggle {
     align-self: center;
     color: #8b8b8b;
