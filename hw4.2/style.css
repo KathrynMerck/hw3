@@ -1,0 +1,270 @@
+/* File: style.css
+GUI Assignment: HW4
+Kathryn Merck, UMass Lowell Computer Science, kathryn_merck@student.uml.edu
+Copyright (c) 2025 by Kathryn. All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
+ */
+
+html, body {
+    height: 100%;
+}
+
+.paramdiv {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.parammain {
+    width: 375px;
+    flex-shrink: 0;
+    overflow-x: hidden;
+    transition: width .5s ease-in-out;
+}
+
+.parammainfloat {
+    float: right;
+    margin: 0 40px 0 80%;
+}
+
+@media (max-width: 575.98px) {
+    .parammain {
+        width: calc(100% - 19px);
+    }
+}
+
+.parahidden {
+    width: 0 !important;
+}
+
+.instructiondiv ul {
+    min-width: 300px;
+    list-style: none;
+    overflow: hidden;
+}
+
+.instructiondiv li::before {
+    content: "-";
+    padding-right: 8px;
+}
+
+.paramtoggle {
+    align-self: center;
+    color: #8b8b8b;
+}
+
+.paramtoggle:hover {
+    color: #3b3b3b;
+}
+
+.arrow {
+    text-align: center;
+    padding: 5px 1px;
+    border-radius: 0 6px 6px 0;
+    font-size: 1em;
+}
+.toggon::before{
+    transform: scaleX(1);
+    transition: transform .4s ease-in-out;
+}
+
+.toggoff::before{
+    transform: scaleX(-1);
+    transition: transform .4s ease-in-out;
+}
+
+.overlay {
+    background-color: whitesmoke;
+}
+
+.cell {
+    max-width: 48px;
+    max-height: 48px;
+    
+    min-width: 48px;
+    min-height: 48px;
+
+    width: 48px;
+    height: 48px;
+
+    text-align: center;
+    color: #8b8b8b;
+}
+
+.cell input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 5px;
+    outline: 2px solid whitesmoke;
+    outline-offset: -1px;
+    background-color: whitesmoke;
+    text-align: center;
+    box-shadow: 0 3px 0 8px whitesmoke inset, 0 0px 0 5px whitesmoke inset, 0 0px 0 7px black inset;
+    transition: box-shadow .5s;
+}
+
+.cell input:focus {
+    box-shadow: 0 3px 0 8px rgba(245, 245, 245, 0) inset, 0 0px 0 5px whitesmoke inset, 0 0px 0 7px black inset;
+}
+
+.cell input:invalid {
+    box-shadow: 0 3px 0 8px rgba(245, 245, 245, 0) inset, 0 0px 0 5px whitesmoke inset, 0 0px 0 7px red inset;
+}
+
+.invalidinput{
+    box-shadow: 0 3px 0 8px rgba(245, 245, 245, 0) inset, 0 0px 0 5px whitesmoke inset, 0 0px 0 7px red inset !important;
+}
+
+#tcell {
+    border: 1px solid black;
+    border-top: none;
+}
+
+#lcell {
+    border: 1px solid black;
+    border-left: none;
+}
+
+#mcell {
+    border: 1px solid black;
+}
+
+#rcell {
+    border: 1px solid black;
+    border-right: none;
+}
+
+#bcell {
+    border: 1px solid black;
+    border-bottom: none;
+}
+
+tr .cell:first-child {
+    border-left: 1px solid black;
+}
+
+#inputtable tr:first-child .cell{
+    border-top: 1px solid black;
+}
+
+#inputtable tr:first-child .cell:first-child {
+    border: none;
+}
+
+.tablediv {
+    padding-left: 2rem;
+}
+
+#tabs {
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
+    margin: 5px;
+    overflow: hidden;
+}
+
+.tab {
+    height: 75%;
+    padding: 5px !important;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.gentablediv {
+    width: 100%;
+    overflow: hidden;
+}
+
+.rescell {
+    padding: 5px;
+}
+
+.startcell, .startrow {
+    position: sticky;
+    background-color: white;
+    border: none;
+    z-index: 1;
+}
+
+.startcell{
+    left: 0;
+}
+
+.startrow {
+    top: 0;
+}
+
+.timescell {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: white;
+    border: none;
+}
+
+.startcell:hover, .startrow:hover {
+    background-color: #d4d4d4;
+}
+
+input[type=color] {
+    border-radius: 50%;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    outline: 3px solid white;
+    outline-offset: -2px;
+    margin: 3px 6px;
+}
+
+.hiddendiv {
+    display: none;
+}
+
+.showhiddendiv {
+    display: block !important;
+}
+
+.inactivewarn {
+    max-height: 0;
+}
+
+.warn {
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+}
+
+#xbutton {
+    float: right;
+    position: relative;
+    background-color: transparent;
+    color: black;
+    font-size: 2em;
+    z-index: 2;
+}
+
+#xbutton:hover {
+    color: #8b8b8b;
+}
+
+form table, form div {
+    display: inline-table;
+}
+
+.sliderh {
+    width: 144px;
+    margin: 10px 0;
+    margin-left: 100px;
+}
+
+.sliderv {
+    height: 144px;
+    margin: 0 5px;
+}
+
+.closetab:hover {
+    color: rgb(126, 126, 126);
+}
