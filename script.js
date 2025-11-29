@@ -1,11 +1,18 @@
 $(document).ready(function(){
+/* File: script.js
+GUI Assignment: HW4
+Kathryn Merck, UMass Lowell Computer Science, kathryn_merck@student.uml.edu
+Copyright (c) 2025 by Kathryn. All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
+ */
+
 
 const toggles = document.getElementsByClassName("paramtoggle");
 const genButton = document.getElementById("submitbutton");
-// const min1 = document.getElementById("rowmin");
-// const max1 = document.getElementById("rowmax");
-// const min2 = document.getElementById("colmin");
-// const max2 = document.getElementById("colmax");
+const min1 = document.getElementById("rowmin");
+const max1 = document.getElementById("rowmax");
+const min2 = document.getElementById("colmin");
+const max2 = document.getElementById("colmax");
 const resTable = document.getElementById("resulttable");
 const customCheck = document.getElementById("customColors");
 const hiddenDiv = document.getElementsByClassName("hiddendiv")[0];
@@ -15,10 +22,6 @@ const form = $("#inputform");
 let cMin, crMax, ccMax; //Sorry for the global vars :(
 
 customCheck.addEventListener("change", showColorPicks);
-
-const invalids = new Set();
-const customHSLs = [];
-
 
 
 class HSL {
@@ -44,7 +47,7 @@ class HSL {
         return new HSL(nh, ns, nl);
     }
 }
-
+genNewColors();
 
 for (const toggle of toggles) {
     toggle.addEventListener("click", toggleFunct);
@@ -60,18 +63,74 @@ function toggleFunct() {
     this.previousSibling.previousSibling.classList.toggle("parahidden");
 }
 
-$("input").addEventListener("blur", checkparams);
-
-$("[type='number']").rules( "add", {
-    step: 1
-})
 
 form.validate({
-    // invalidHandler: function(event, validator) {
-
-    // },
-    errorClass: "invalidinput"
+    rules: {
+        colmin: {
+            step: 1,
+            max: 50,
+            min: -50,
+            required: true
+        },
+        colmax: {
+            step: 1,
+            max: 50,
+            min: -50,
+            required: true
+        },
+        rowmin: {
+            step: 1,
+            max: 50,
+            min: -50,
+            required: true
+        },
+        rowmax: {
+            step: 1,
+            max: 50,
+            min: -50,
+            required: true
+        }
+    },
+    messages: {
+        colmin: {
+            step: "All inputs must be integers",
+            max: "All inputs must be <= 50",
+            min: "All inputs must be >= -50",
+            required: "All inputs are required"
+        },
+        colmax: {
+            step: "All inputs must be integers",
+            max: "All inputs must be <= 50",
+            min: "All inputs must be >= -50",
+            required: "All inputs are required"
+        },
+        rowmin: {
+            step: "All inputs must be integers",
+            max: "All inputs must be <= 50",
+            min: "All inputs must be >= -50",
+            required: "All inputs are required"
+        },
+        rowmax: {
+            step: "All inputs must be integers",
+            max: "All inputs must be <= 50",
+            min: "All inputs must be >= -50",
+            required: "All inputs are required"
+        }
+    },
+    highlight: function(element) {
+        $(element).addClass("invalidinput");
+    },
+    unhighlight: function(element) {
+        $(element).removeClass("invalidinput");
+    },
+    errorPlacement: function(error, placement) {
+        error.appendTo(form);
+    }
 });
+
+
+$("input").change(checkparams);
+
 
 // function validatein() {
 //     if (this.value == "") {
@@ -88,6 +147,7 @@ form.validate({
 function checkparams() {
     if(!form.valid())
         return;
+    console.log("yay");
     // if(invalids.size != 0){
     //     invalidParams();
     //     return;
