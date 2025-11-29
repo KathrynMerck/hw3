@@ -1,24 +1,25 @@
+$(document).ready(function(){
+
 const toggles = document.getElementsByClassName("paramtoggle");
 const genButton = document.getElementById("submitbutton");
-const min1 = document.getElementById("rowmin");
-const max1 = document.getElementById("rowmax");
-const min2 = document.getElementById("colmin");
-const max2 = document.getElementById("colmax");
+// const min1 = document.getElementById("rowmin");
+// const max1 = document.getElementById("rowmax");
+// const min2 = document.getElementById("colmin");
+// const max2 = document.getElementById("colmax");
 const resTable = document.getElementById("resulttable");
 const customCheck = document.getElementById("customColors");
 const hiddenDiv = document.getElementsByClassName("hiddendiv")[0];
 const colorPickers = document.getElementsByClassName("colorpick");
 const warndiv = document.getElementById("invalidwarn");
+const form = $("#inputform");
+let cMin, crMax, ccMax; //Sorry for the global vars :(
 
 customCheck.addEventListener("change", showColorPicks);
 
 const invalids = new Set();
 const customHSLs = [];
 
-min1.addEventListener("blur", validatein);
-max1.addEventListener("blur", validatein);
-min2.addEventListener("blur", validatein);
-max2.addEventListener("blur", validatein);
+
 
 class HSL {
     constructor(h, s, l) {
@@ -49,6 +50,7 @@ for (const toggle of toggles) {
     toggle.addEventListener("click", toggleFunct);
 }
 
+genButton.addEventListener("click", genNewColors);
 genButton.addEventListener("click", checkparams);
 
 function toggleFunct() {
@@ -58,30 +60,45 @@ function toggleFunct() {
     this.previousSibling.previousSibling.classList.toggle("parahidden");
 }
 
-function validatein() {
-    if (this.value == "") {
-        this.classList.add("invalidinput");
-        invalids.add(this.id);
-    }
-    else {
-        this.classList.remove("invalidinput");
-        if(invalids.has(this.id))
-            invalids.delete(this.id);
-    }
-}
+$("input").addEventListener("blur", checkparams);
+
+$("[type='number']").rules( "add", {
+    step: 1
+})
+
+form.validate({
+    // invalidHandler: function(event, validator) {
+
+    // },
+    errorClass: "invalidinput"
+});
+
+// function validatein() {
+//     if (this.value == "") {
+//         this.classList.add("invalidinput");
+//         invalids.add(this.id);
+//     }
+//     else {
+//         this.classList.remove("invalidinput");
+//         if(invalids.has(this.id))
+//             invalids.delete(this.id);
+//     }
+// }
 
 function checkparams() {
-    if(invalids.size != 0){
-        invalidParams();
+    if(!form.valid())
         return;
-    }
+    // if(invalids.size != 0){
+    //     invalidParams();
+    //     return;
+    // }
     const values = [Number(min1.value), Number(max1.value), Number(min2.value), Number(max2.value)];
-    for(const value of values) {
-        if(value < -50 || value > 50 || value == NaN || value % 1 != 0){
-            invalidParams();
-            return;
-        }
-    }
+    // for(const value of values) {
+    //     if(value < -50 || value > 50 || value == NaN || value % 1 != 0){
+    //         invalidParams();
+    //         return;
+    //     }
+    // }
     let rowDiff = values[1] - values[0];
     let colDiff = values[3] - values[2];
     const diffs = [Math.abs(rowDiff), Math.abs(colDiff)];
@@ -93,16 +110,12 @@ function checkparams() {
     createTable(coEffs, values, diffs);
 }
 
-function invalidParams() {
-    if(warndiv.classList.contains("inactivewarn"))
-        warndiv.classList.remove("inactivewarn");
-}
+// function invalidParams() {
+//     if(warndiv.classList.contains("inactivewarn"))
+//         warndiv.classList.remove("inactivewarn");
+// }
 
-function createTable(coEffs, values, diffs) {
-    if(!warndiv.classList.contains("inactivewarn"))
-        warndiv.classList.add("inactivewarn");
-    resTable.innerHTML = "";
-    let cMin, crMax, ccMax;
+function genNewColors() {
     if(customCheck.checked == false){
         cMin = randcolor();
         crMax = randcolor();
@@ -112,6 +125,13 @@ function createTable(coEffs, values, diffs) {
         crMax = toHSL(colorPickers[2].value);
         ccMax = toHSL(colorPickers[1].value);
     }
+}
+
+function createTable(coEffs, values, diffs) {
+    if(!warndiv.classList.contains("inactivewarn"))
+        warndiv.classList.add("inactivewarn");
+    resTable.innerHTML = "";
+    
     const blendFact = colorBlend(cMin, crMax, diffs[0]+1)[1];
     const blendArr = [colorBlend(cMin, ccMax, diffs[1]+1)[0]];
     
@@ -238,3 +258,5 @@ function toHSL(hex) {
     return new HSL(h, Math.round(s), Math.round(l));
     
 }
+
+});
